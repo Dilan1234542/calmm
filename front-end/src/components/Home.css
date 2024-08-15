@@ -1,0 +1,215 @@
+/* Estilo general para la página */
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    padding: 20px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  h1 {
+    font-size: 2.8rem;
+    color: #0d47a1;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 700;
+  }
+  
+  .subtitle {
+    font-size: 1.3rem;
+    color: #0d47a1;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 400;
+  }
+  
+  /* Contenedor para alinear los elementos en fila */
+  .content-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    gap: 20px; /* Espacio entre los elementos */
+    margin-bottom: 30px;
+  }
+
+    /* Estilo para la sección de actividades */
+    .activity-section {
+        width: 100%;
+        background-color: #ffffff;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        font-weight: 400;
+      }
+  
+  .circle-container, .activity-section {
+    flex: 1; /* Permite que ambos elementos se ajusten igualmente */
+  }
+  
+  /* Estilo para el contenedor del círculo */
+  .circle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 350px;
+    height: 350px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .circle-container:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilo para el círculo de respiración */
+  .breathing-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #4caf50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .breathing-circle:hover {
+    background-color: #388e3c;
+    transform: scale(1.02);
+  }
+  
+  .counter {
+    font-size: 4.5rem;
+    color: #fff;
+    margin-top: 10px;
+    font-weight: 700;
+  }
+  
+  .phase-text {
+    font-size: 1.6rem;
+    color: #fff;
+    margin-top: 5px;
+  }
+  
+  .start-text {
+    font-size: 1.9rem;
+    color: #fff;
+    font-weight: 600;
+  }
+  
+
+  
+  .activity-section h2 {
+    font-size: 1.8rem;
+    color: #0d47a1;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  .activity-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .activity-section li {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  .activity-section li strong {
+    color: #0d47a1;
+  }
+  
+  /* Estilo para el botón de abrir modal */
+  .open-modal-button {
+    padding: 12px 24px;
+    background-color: #42a5f5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .open-modal-button:hover {
+    background-color: #1e88e5;
+    transform: scale(1.02);
+  }
+  
+  /* Estilos responsivos */
+  @media (max-width: 768px) {
+    .content-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .circle-container {
+      width: 80%;
+      height: auto;
+    }
+  
+    .breathing-circle {
+      width: 100%;
+      height: auto;
+    }
+  
+    .counter {
+      font-size: 3.5rem;
+    }
+  
+    .phase-text, .start-text {
+      font-size: 1.3rem;
+    }
+  
+    .open-modal-button {
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .home {
+      padding: 10px;
+    }
+  
+    .circle-container {
+      width: 100%;
+      height: auto;
+    }
+  
+    .breathing-circle {
+      width: 100%;
+      height: auto;
+    }
+  
+    .counter {
+      font-size: 3rem;
+    }
+  
+    .phase-text, .start-text {
+      font-size: 1.2rem;
+    }
+  
+    .open-modal-button {
+      font-size: 1rem;
+      margin-top: 20px;
+    }
+  }
+  
