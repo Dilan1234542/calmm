@@ -23,6 +23,13 @@ const Signup = () => {
       return;
     }
 
+    // Validar que el nombre completo no contenga números
+    const nombreCompletoValido = /^[a-zA-Z\s]+$/.test(nombreCompleto);
+    if (!nombreCompletoValido) {
+      setError('El nombre completo no puede contener números');
+      return;
+    }
+
     try {
       // Enviar la solicitud de registro a la API
       const response = await fetch('http://localhost:3000/api/signup', {
@@ -43,13 +50,19 @@ const Signup = () => {
 
       if (!response.ok) {
         const errorData = await response.json(); // Obtener detalles del error
-        throw new Error(errorData.error || 'Error en el registro');
+        // Verificar el mensaje de error del backend
+        if (errorData.error === 'Username already exists') {
+          setError('El nombre de usuario ya está en uso. Intenta con otro.');
+        } else {
+          setError(errorData.error || 'Error en el registro');
+        }
+        return;
       }
 
       // Redirigir al usuario a la página de inicio después del registro
       navigate('/home');
     } catch (error) {
-      setError(error.message);
+      setError('Error en la conexión con el servidor');
     }
   };
 

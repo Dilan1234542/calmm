@@ -25,8 +25,9 @@ const BreathingActivitiesModal = ({ isOpen, onRequestClose }) => {
     fetchActivities();
   }, []);
 
-  if (!activities || activities.length === 0) {
-    return <div>Cargando actividades...</div>; // Muestra un mensaje de carga si no hay actividades
+  // No mostrar la modal si no hay actividades
+  if (!isOpen || activities.length === 0) {
+    return null;
   }
 
   const nextActivity = () => {
@@ -47,7 +48,6 @@ const BreathingActivitiesModal = ({ isOpen, onRequestClose }) => {
 
   const activity = activities[currentIndex];
 
-  // Verifica que `activity` y `activity.pattern` existan
   return (
     <Modal
       isOpen={isOpen}

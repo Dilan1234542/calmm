@@ -6,10 +6,21 @@ import './Home.css';
 const Home = () => {
   const [counter, setCounter] = useState(5);
   const [isCounting, setIsCounting] = useState(false);
-  const [phase, setPhase] = useState('inhale'); // 'inhale' o 'exhale'
+  const [phase, setPhase] = useState('inhale');
   const [cycles, setCycles] = useState(0);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const { speak } = useSpeechSynthesis();
+  const [activity, setActivity] = useState('breathing'); // Nuevo estado para alternar entre actividades
+
+  // Estado para el consejo del día
+  const [currentAdviceIndex, setCurrentAdviceIndex] = useState(0);
+  const adviceList = [
+    'Planifica tu Tiempo: Usa una agenda para organizar tus tareas y evitar la procrastinación.',
+    'Encuentra Tiempo para Ti: Dedica tiempo a actividades que disfrutes, como leer o practicar deportes.',
+    'Habla con Alguien: No dudes en buscar apoyo emocional en amigos, familiares o consejeros.',
+    'Practica Técnicas de Relajación: Considera la meditación, el yoga o la respiración profunda para reducir el estrés.',
+    'Establece Metas Realistas: No te exijas demasiado y establece metas alcanzables para evitar el agotamiento.'
+  ];
 
   useEffect(() => {
     let timer;
@@ -37,6 +48,14 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, [counter, isCounting, phase, cycles, speak]);
 
+  useEffect(() => {
+    const adviceTimer = setInterval(() => {
+      setCurrentAdviceIndex((prevIndex) => (prevIndex + 1) % adviceList.length);
+    }, 10000); // Cambiar consejo cada 10 segundos
+
+    return () => clearInterval(adviceTimer);
+  }, [adviceList.length]);
+
   const startBreathing = () => {
     speak({ text: 'Respira conmigo' });
     setTimeout(() => {
@@ -46,6 +65,15 @@ const Home = () => {
       speak({ text: 'Inhala' });
       setCycles(0);
     }, 3000); // Espera 3 segundos antes de comenzar la secuencia
+  };
+
+  const startVisualRelaxation = () => {
+    setIsCounting(false);
+    speak({ text: 'Relájate y concéctate en la imagen' });
+  };
+
+  const toggleActivity = () => {
+    setActivity(activity === 'breathing' ? 'visual' : 'breathing');
   };
 
   const openModal = () => setModalIsOpen(true);
@@ -59,23 +87,30 @@ const Home = () => {
       </p>
       
       <div className="content-wrapper">
+        
         <div className="circle-container">
-          <div className="breathing-circle" onClick={startBreathing}>
-            {isCounting ? (
+          <span className="arrow left-arrow" onClick={toggleActivity}>⬅️</span>
+          <div
+            className="breathing-circle"
+            onClick={activity === 'breathing' ? startBreathing : startVisualRelaxation}
+            style={{ backgroundColor: activity === 'breathing' ? '#4caf50' : '#ff9800' }}
+          >
+            {isCounting && activity === 'breathing' ? (
               <>
                 <span className="counter">{counter}</span>
-                <span className="phase-text">
-                  {phase === 'inhale' ? 'Inhala' : 'Exhala'}
-                </span>
+                <span className="phase-text">{phase === 'inhale' ? 'Inhala' : 'Exhala'}</span>
               </>
             ) : (
-              <span className="start-text">Comienza a Respirar</span>
+              <span className="start-text">
+                {activity === 'breathing' ? 'Comienza a Respirar' : 'Comienza la Relajación'}
+              </span>
             )}
           </div>
+          <span className="arrow right-arrow" onClick={toggleActivity}>➡️</span>
         </div>
 
         <div className="activity-section">
-          <h2 >Consejos para Manejar el Estrés Universitario</h2>
+          <h2>Consejos para Manejar el Estrés Universitario</h2>
           <ul>
             <li><strong>Planifica tu Tiempo:</strong> Usa una agenda para organizar tus tareas y evitar la procrastinación.</li>
             <li><strong>Encuentra Tiempo para Ti:</strong> Dedica tiempo a actividades que disfrutes, como leer o practicar deportes.</li>
@@ -84,6 +119,11 @@ const Home = () => {
             <li><strong>Establece Metas Realistas:</strong> No te exijas demasiado y establece metas alcanzables para evitar el agotamiento.</li>
           </ul>
         </div>
+      </div>
+
+      <div className="advice-section">
+        <h2>Consejo del Día</h2>
+        <p className="advice-text">{adviceList[currentAdviceIndex]}</p>
       </div>
 
       <button className="open-modal-button" onClick={openModal}>
