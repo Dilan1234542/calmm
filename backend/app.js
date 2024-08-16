@@ -1,5 +1,6 @@
 const express = require("express");
 const usuarioRoutes = require("./routes/usuarioRoutes");
+const actividadRoutes = require("./routes/actividadRoutes");
 const sequelize = require("./config/database");
 const cors = require("cors");
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Configura las rutas de la API
 app.use("/api", usuarioRoutes);
+app.use("/act", actividadRoutes);
 
 // Sincroniza la base de datos y arranca el servidor
 sequelize
