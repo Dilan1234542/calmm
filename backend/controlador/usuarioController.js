@@ -12,7 +12,6 @@ exports.getAllUsuario = async (req, res) => {
   }
 };
 
-// Función para obtener un libro por su ID
 exports.getUsuarioById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -35,13 +34,9 @@ exports.getUsuarioById = async (req, res) => {
   }
 };
 
-// Función para autenticar un usuario basado en el correo electrónico y la contraseña
-// Función para autenticar un usuario basado en el correo electrónico y la contraseña
 exports.authenticateUser = async (req, res) => {
   try {
     const { correo, contraseña } = req.body;
-
-    // Consulta para obtener el usuario basado en el correo electrónico
     const usuarios = await sequelize.query(
       "SELECT * FROM usuarios WHERE correoelectronico = ?",
       {
@@ -50,15 +45,11 @@ exports.authenticateUser = async (req, res) => {
       }
     );
 
-    // Verificar si el usuario existe
     if (usuarios.length === 0) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
-
-    // Verificar la contraseña (este ejemplo supone que la contraseña es almacenada en texto plano; deberías usar un método seguro de almacenamiento)
     const usuario = usuarios[0];
     if (usuario.password === contraseña) {
-      // Autenticación exitosa
       res.json({ message: "Autenticación exitosa", usuario });
     } else {
       // Contraseña incorrecta
@@ -82,20 +73,17 @@ exports.createUser = async (req, res) => {
       perfilPublico,
     } = req.body;
 
-    // Verificar que todos los campos necesarios están presentes
     if (
       !username ||
       !password ||
       !nombreCompleto ||
       !correoElectronico ||
       !activo ||
-      !perfilAdministrador ||
       !perfilPublico
     ) {
       return res.status(400).json({ error: "Faltan campos requeridos" });
     }
 
-    // Consulta para insertar un nuevo usuario
     const [result] = await sequelize.query(
       `INSERT INTO Usuarios (USERNAME, PASSWORD, NOMBRECOMPLETO, CORREOELECTRONICO, ACTIVO, PERFILADMINISTRADOR, PERFILPUBLICO)
        VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *`,
@@ -112,8 +100,6 @@ exports.createUser = async (req, res) => {
         type: QueryTypes.INSERT,
       }
     );
-
-    // Responder con el usuario creado
     res
       .status(201)
       .json({ message: "Usuario creado exitosamente", usuario: result[0] });
