@@ -8,9 +8,11 @@ const Signup = () => {
   const [correoElectronico, setCorreoElectronico] = useState('');
   const [password, setPassword] = useState('');
   const [activo, setActivo] = useState(''); // Valor por defecto
-  const [perfilAdministrador, setPerfilAdministrador] = useState(''); // Valor por defecto
-  const [perfilPublico, setPerfilPublico] = useState(''); // Valor por defecto
   const [error, setError] = useState('');
+
+  // Valores predeterminados para los perfiles
+  const perfilAdministrador = null; // Valor predeterminado (no visible para el usuario)
+  const perfilPublico = '1'; // Valor predeterminado (no visible para el usuario)
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -34,8 +36,8 @@ const Signup = () => {
           nombreCompleto,
           correoElectronico,
           activo,
-          perfilAdministrador,
-          perfilPublico,
+          perfilAdministrador, // Valor predeterminado no visible
+          perfilPublico, // Valor predeterminado no visible
         }),
       });
 
@@ -84,23 +86,6 @@ const Signup = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        
-        <label>
-          <input
-            type="text"
-            placeholder="Perfil Administrador"
-            value={perfilAdministrador}
-            onChange={(e) => setPerfilAdministrador(e.target.value)}
-          />
-        </label>
-        <label>
-          <input
-            type="text"
-            placeholder="Perfil Público"
-            value={perfilPublico}
-            onChange={(e) => setPerfilPublico(e.target.value)}
-          />
-        </label>
         <label>
           Activo:
           <select
