@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import CryptoJS from 'crypto-js';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,13 +17,16 @@ const Login = () => {
       return;
     }
 
+    // Hashear la contraseña usando MD5
+    const hashedPassword = CryptoJS.MD5(password).toString();
+
     try {
       const response = await fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ correo: email, contraseña: password }),
+        body: JSON.stringify({ correo: email, contraseña: hashedPassword }),
       });
 
       const data = await response.json();
